@@ -1,30 +1,18 @@
 from flask import Flask, request, jsonify
-import requests
+from flask_cors import CORS
+
 app = Flask(__name__)
 
-@app.route('/location', methods=['OPTIONS', 'POST'])
-def receive_location():
-    data = request.get_json()
-    name = data.get("name")
-    latitude = data.get("latitude")
-    longitude = data.get("longitude")
-
-    print(f"Received location: {name}, Latitude: {latitude}, Longitude: {longitude}")
-
-    arduino_ip = "http://arduino_ip_address"  # Replace with Arduino's actual IP
-
-    if name == "Arcot Road":
-        instruction = "start"
-    else:
-        instruction = "stop"
-
-    payload = {"instruction": instruction}
-    response = requests.post(f"{arduino_ip}/instruction", json=payload)
-
-    if response.status_code == 200:
-        return jsonify({"instruction": instruction})
-    else:
-        return jsonify({"instruction": "error", "message": "Failed to send instruction to Arduino"})
+CORS(app)
+@app.route('/location', methods=['POST'])
+def location():
+    try:
+        # Force Flask to parse the incoming JSON payload
+        data = request.get_json(force=True)
+        print(f"Received location: {data}")  # Print the received data in the terminal
+        return jsonify({"status": "success"})
+    except Exception as e:
+        return jsonify({"status": "failure", "error": str(e)}), 400
 
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    app.run(host='0.0.0.0', port=5000)
