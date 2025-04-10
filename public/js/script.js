@@ -8,7 +8,7 @@ if (navigator.geolocation) {
 
             // Find the closest highlighted location within 1000 meters
             let closestLocation = null;
-            let minDistance = 300; // Threshold: 1 kilometer (1000 meters)
+            let minDistance = 10000; // Threshold: 1 kilometer (1000 meters)
 
             highlightLocations.forEach((location) => {
                 const distance = getDistanceFromLatLonInMeters(
@@ -33,8 +33,6 @@ if (navigator.geolocation) {
                             iconSize: [32, 32], // Adjust size if needed
                         })
                     );
-                    
-                    // Send the location data (name, lat, lon) to Python server
                     sendLocationToPython(location.name, location.latitude, location.longitude);
                 } else {
                     location.marker.setIcon(
@@ -67,7 +65,7 @@ const highlightLocations = [
     { name: "Arcot Road", latitude: 13.0418592823117, longitude: 80.17641308680929 },
     { name: "Besant Nagar", latitude: 12.9960874, longitude: 80.2676685 },
     { name: "Anna Nagar Roundabout", latitude: 13.084663299999999, longitude: 80.21796674973545 },
-    { name: "Infosys", latitude: 12.8925236, longitude: 80.2275312 }
+    { name: "Infosys", latitude: 12.8925236, longitude: 80.2275312 },
 ];
 
 // Add markers for highlight locations
@@ -116,7 +114,7 @@ function degToRad(deg) {
 
 // Function to send location data to Python
 function sendLocationToPython(name, latitude, longitude) {
-    fetch("http://localhost:5000/location", {  // Replace with your Python server URL
+    fetch("http://localhost:5000/location", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
