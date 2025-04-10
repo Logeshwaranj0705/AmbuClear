@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import requests
 app = Flask(__name__)
 
+@app.route('/location', methods=['OPTIONS', 'POST'])
 def receive_location():
     data = request.get_json()
     name = data.get("name")
