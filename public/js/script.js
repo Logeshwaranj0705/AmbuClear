@@ -7,7 +7,7 @@ if (navigator.geolocation) {
             socket.emit("send-location", { latitude, longitude });
 
             let closestLocation = null;
-            let minDistance = 10000;
+            let minDistance = 500;
 
             highlightLocations.forEach((location) => {
                 const distance = getDistanceFromLatLonInMeters(
@@ -64,8 +64,8 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 // Predefined highlight locations
 const highlightLocations = [
     { name: "Arcot Road", latitude: 13.0418592823117, longitude: 80.17641308680929,esp32_id: "esp32_001" },
-    { name: "Besant Nagar", latitude: 12.9960874, longitude: 80.2676685,esp32_id: "esp32_003" },
-    { name: "Anna Nagar Roundabout", latitude: 13.084663299999999, longitude: 80.21796674973545,esp32_id: "esp32_002" },
+    { name: "Besant Nagar", latitude: 12.9960874, longitude: 80.2676685,esp32_id: "esp32_002" },
+    { name: "Anna Nagar Roundabout", latitude: 13.084663299999999, longitude: 80.21796674973545,esp32_id: "esp32_003" },
     { name: "Infosys", latitude: 12.8925236, longitude: 80.2275312,esp32_id: "esp32_004" },
 ];
 
